@@ -97,6 +97,7 @@
     nextQuestion: document.querySelector("#next-question"),
     showAnswer: document.querySelector("#show-answer"),
     resetProgress: document.querySelector("#reset-progress"),
+    resetPattern: document.querySelector("#reset-pattern"),
     clefSetting: document.querySelector("#clef-setting"),
     difficultySetting: document.querySelector("#difficulty-setting"),
     ledgerDirection: document.querySelector("#ledger-direction"),
@@ -402,6 +403,7 @@
     state.mode = mode;
     els.tabs.forEach((tab) => tab.classList.toggle("is-active", tab.dataset.mode === mode));
     els.patternProgress.hidden = mode !== "pattern";
+    els.resetPattern.hidden = mode !== "pattern";
     state.reviewQueue = mode === "review" ? reviewNotes() : state.reviewQueue;
     saveProgress();
     nextQuestion(true);
@@ -692,9 +694,21 @@
       const confirmed = window.confirm("确定要清空所有练习统计吗？");
       if (!confirmed) return;
       state.progress = defaultProgress();
+      state.patternIndex = 0;
+      state.patternAnswers = [];
+      state.reviewQueue = [];
       saveProgress();
       refreshStats();
       nextQuestion(true);
+      setFeedback("good", "所有练习统计已清空，从头开始。");
+    });
+    els.resetPattern.addEventListener("click", () => {
+      const confirmed = window.confirm("确定要完全重置规律练习吗？将从头开始。");
+      if (!confirmed) return;
+      state.patternIndex = 0;
+      state.patternAnswers = [];
+      nextQuestion(true);
+      setFeedback("good", "已完全重置，从第一组规律从头开始。");
     });
     window.addEventListener("resize", () => drawStaff(state.current));
   }

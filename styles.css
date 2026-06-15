@@ -421,10 +421,28 @@ h2 {
 
 .action-row {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
+  grid-template-columns: auto 1fr 1.3fr;
   gap: 8px;
   margin-top: 12px;
   padding: 0;
+}
+
+.reset-pattern-btn {
+  min-height: 50px;
+  padding: 0 14px;
+  color: var(--red);
+  background: var(--surface);
+  border: 1px solid var(--red);
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  font-weight: 850;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.reset-pattern-btn:active {
+  color: #ffffff;
+  background: var(--red);
 }
 
 .primary-button,
