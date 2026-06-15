@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#f7f4ed">
+    <title>五线谱识音练习</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell" aria-labelledby="app-title">
+      <header class="topbar">
+        <div>
+          <h1 id="app-title">五线谱识音练习</h1>
+          <p id="mode-subtitle">从位置到音名、唱名和听觉，一题一题练熟。</p>
+        </div>
+        <button class="icon-button" id="reset-progress" type="button" aria-label="重置练习进度" title="重置练习进度">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M4.7 9.2a7.7 7.7 0 1 1 1.6 7.9"/>
+            <path d="M4.2 4.8v4.9h4.9"/>
+          </svg>
+        </button>
+      </header>
+
+      <nav class="mode-tabs" aria-label="练习模式">
+        <button type="button" class="tab is-active" data-mode="random">随机</button>
+        <button type="button" class="tab" data-mode="pattern">规律</button>
+        <button type="button" class="tab" data-mode="ledger">加线</button>
+        <button type="button" class="tab" data-mode="audio">听音</button>
+        <button type="button" class="tab" data-mode="review">复习</button>
+      </nav>
+
+      <section class="stats-strip" aria-label="练习统计">
+        <div>
+          <span class="stat-value" id="stat-accuracy">0%</span>
+          <span class="stat-label">正确率</span>
+        </div>
+        <div>
+          <span class="stat-value" id="stat-streak">0</span>
+          <span class="stat-label">连续</span>
+        </div>
+        <div>
+          <span class="stat-value" id="stat-today">0</span>
+          <span class="stat-label">今日</span>
+        </div>
+        <div>
+          <span class="stat-value" id="stat-weak">0</span>
+          <span class="stat-label">待复习</span>
+        </div>
+      </section>
+
+      <section class="practice-stage" aria-live="polite">
+        <div class="stage-head">
+          <div>
+            <p class="eyebrow" id="question-type">随机抽查</p>
+            <h2 id="question-title">看谱面，点选音名和唱名</h2>
+          </div>
+          <button class="tool-button" id="play-note" type="button">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <span>播放</span>
+          </button>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="staff-canvas" width="720" height="360" aria-label="当前五线谱音符"></canvas>
+        </div>
+
+        <div class="question-meta">
+          <span id="clef-label">高音谱</span>
+          <span id="range-label">五线与四间</span>
+          <span id="step-label">位置</span>
+        </div>
+
+        <div class="pattern-progress" id="pattern-progress" hidden></div>
+
+        <div class="feedback" id="feedback" role="status">
+          选择一个音名和一个唱名后自动校验。
+        </div>
+      </section>
+
+      <section class="answer-area" aria-label="答题区">
+        <div class="answer-group">
+          <div class="answer-heading">音名</div>
+          <div class="answer-grid" id="letter-buttons"></div>
+        </div>
+        <div class="answer-group">
+          <div class="answer-heading">唱名</div>
+          <div class="answer-grid solfege-grid" id="solfege-buttons"></div>
+        </div>
+      </section>
+
+      <footer class="action-row">
+        <button class="secondary-button" id="show-answer" type="button">显示答案</button>
+        <button class="primary-button" id="next-question" type="button">下一题</button>
+      </footer>
+
+      <section class="controls" aria-label="练习设置">
+        <label>
+          <span>谱号</span>
+          <select id="clef-setting">
+            <option value="mixed">高音 + 低音</option>
+            <option value="treble">高音谱</option>
+            <option value="bass">低音谱</option>
+          </select>
+        </label>
+        <label>
+          <span>难度</span>
+          <select id="difficulty-setting">
+            <option value="staff">五线与四间</option>
+            <option value="ledger1">加线 1-2 条</option>
+            <option value="ledger2">加线 1-4 条</option>
+          </select>
+        </label>
+        <label>
+          <span>加线</span>
+          <select id="ledger-direction">
+            <option value="mixed">上下混合</option>
+            <option value="above">上加线</option>
+            <option value="below">下加线</option>
+          </select>
+        </label>
+        <label>
+          <span>范围</span>
+          <select id="ledger-kind">
+            <option value="lines">只考线</option>
+            <option value="all">线和间</option>
+          </select>
+        </label>
+        <label class="switch-row">
+          <input id="autoplay-setting" type="checkbox">
+          <span>自动播放</span>
+        </label>
+        <label class="switch-row">
+          <input id="hint-setting" type="checkbox" checked>
+          <span>中文提示</span>
+        </label>
+        <label class="switch-row">
+          <input id="weak-setting" type="checkbox" checked>
+          <span>随机混入错题</span>
+        </label>
+      </section>
+    </main>
+  </body>
+</html>
