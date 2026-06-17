@@ -70,11 +70,11 @@
   const PATTERNS = [
     { id: "treble-lines", clef: "treble", title: "高音谱五条线", steps: [0, 2, 4, 6, 8] },
     { id: "treble-spaces", clef: "treble", title: "高音谱四个间", steps: [1, 3, 5, 7] },
-    { id: "bass-lines", clef: "bass", title: "低音谱五条线", steps: [0, 2, 4, 6, 8] },
-    { id: "bass-spaces", clef: "bass", title: "低音谱四个间", steps: [1, 3, 5, 7] },
+    { id: "bass-lines", clef: "bass", title: "低音谱五条线", steps: [8, 6, 4, 2, 0] },
+    { id: "bass-spaces", clef: "bass", title: "低音谱四个间", steps: [7, 5, 3, 1] },
     { id: "treble-ledger-above", clef: "treble", title: "高音谱上加四线", steps: [10, 12, 14, 16] },
     { id: "treble-ledger-below", clef: "treble", title: "高音谱下加四线", steps: [-2, -4, -6, -8] },
-    { id: "bass-ledger-above", clef: "bass", title: "低音谱上加四线", steps: [10, 12, 14, 16] },
+    { id: "bass-ledger-above", clef: "bass", title: "低音谱上加四线", steps: [16, 14, 12, 10] },
     { id: "bass-ledger-below", clef: "bass", title: "低音谱下加四线", steps: [-2, -4, -6, -8] },
   ];
   const STORAGE_KEY = "staff-note-trainer-v1";
