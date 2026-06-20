@@ -1567,7 +1567,8 @@
   }
 
   function drawClef(clef, x, topY, lineGap) {
-    // 使用 Unicode 音乐符号字符 + Bravura 字体直接渲染谱号
+    // 使用 Unicode 音乐符号字符直接渲染谱号
+    // textBaseline = "middle" 保证字体/设备无关的稳定对齐
     const g = lineGap;
     const fontSize = Math.round(g * 5.2);
 
@@ -1575,18 +1576,16 @@
     ctx.fillStyle = "#20201d";
     ctx.font = `${fontSize}px "Segoe UI Symbol", "Apple Symbols", "Bravura", "Noto Music", sans-serif`;
     ctx.textAlign = "left";
-    ctx.textBaseline = "top";
+    ctx.textBaseline = "middle";
 
     const char = clef === "treble" ? '𝄞' : '𝄢';
-    // 高音谱号 (𝄞)：对齐 G 线（topY + 3g = 第 2 线）
-    // 低音谱号 (𝄢)：对齐 F 线（topY + g  = 第 4 线）
-    const targetY = clef === "treble" ? topY + 3 * g : topY + g;
-    // 偏移量按 lineGap 比例计算，保证不同分辨率设备位置一致
-    const yOffset = clef === "treble"
-      ? -fontSize * 0.38 - g * 2.0
-      : -fontSize * 0.12 - g * 0.8;
+    // 以五线谱中线为基准，微调偏移（单位：lineGap）
+    const staffMid = topY + 2 * g;
+    const y = clef === "treble"
+      ? staffMid + g * 0.15   // 高音谱号居中略偏下
+      : staffMid - g * 0.7;   // 低音谱号略偏上（F 线在上半部）
 
-    ctx.fillText(char, x - g * 0.25, targetY + yOffset);
+    ctx.fillText(char, x - g * 0.15, y);
     ctx.restore();
   }
 
