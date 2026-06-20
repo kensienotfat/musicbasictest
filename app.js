@@ -1581,7 +1581,10 @@
     // 高音谱号 (𝄞)：对齐 G 线（topY + 3g = 第 2 线）
     // 低音谱号 (𝄢)：对齐 F 线（topY + g  = 第 4 线）
     const targetY = clef === "treble" ? topY + 3 * g : topY + g;
-    const yOffset = clef === "treble" ? -fontSize * 0.38 - 50 : -fontSize * 0.12 - 20;
+    // 偏移量按 lineGap 比例计算，保证不同分辨率设备位置一致
+    const yOffset = clef === "treble"
+      ? -fontSize * 0.38 - g * 2.0
+      : -fontSize * 0.12 - g * 0.8;
 
     ctx.fillText(char, x - g * 0.25, targetY + yOffset);
     ctx.restore();
