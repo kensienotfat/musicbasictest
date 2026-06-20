@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "Bravura";
+  src: url("https://cdn.jsdelivr.net/npm/bravura@1.390/font/BravuraText.otf") format("opentype");
+  font-display: block;
+}
+
 :root {
   color-scheme: light;
   --paper: #f7f4ed;
