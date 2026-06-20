@@ -1571,36 +1571,136 @@
     ctx.save();
     ctx.strokeStyle = "#20201d";
     ctx.fillStyle = "#20201d";
-    ctx.lineWidth = Math.max(2.2, lineGap / 7);
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
 
+    const g = lineGap;
+    const bot = topY + 4 * g;  // bottom staff line
+
     if (clef === "treble") {
-      const cx = x + lineGap * 0.7;
-      const cy = topY + lineGap * 2.2;
+      // 高音谱号（G 谱号）—— 螺旋环绕第 2 线（G 线 = bot - g）
+      // 使用多段 Bézier 描摹脊柱线 + 填充终端圆点
+      const cx = x + g * 0.55;
+
+      // 脊柱线：从底部卷曲开始，向上穿过五线，绕 G 线螺旋，
+      // 形成顶部环，再回到底部
       ctx.beginPath();
-      ctx.moveTo(cx, topY + lineGap * 5.1);
-      ctx.bezierCurveTo(cx - lineGap * 0.2, topY + lineGap * 2.7, cx + lineGap * 1.15, topY + lineGap * 1.8, cx + lineGap * 0.28, topY + lineGap * 1.15);
-      ctx.bezierCurveTo(cx - lineGap * 0.7, topY + lineGap * 0.45, cx - lineGap * 1.0, topY + lineGap * 2.3, cx + lineGap * 0.15, topY + lineGap * 2.75);
-      ctx.bezierCurveTo(cx + lineGap * 1.3, topY + lineGap * 3.2, cx + lineGap * 1.1, topY + lineGap * 4.25, cx + lineGap * 0.08, topY + lineGap * 4.05);
-      ctx.bezierCurveTo(cx - lineGap * 0.85, topY + lineGap * 3.86, cx - lineGap * 0.58, topY + lineGap * 2.9, cx + lineGap * 0.2, cy);
+
+      // 起点：底部终端，底线下方约 0.9g
+      ctx.moveTo(cx + 0.12 * g, bot + 0.85 * g);
+
+      // ① 底部卷曲 — 向左弯
+      ctx.bezierCurveTo(
+        cx + 0.38 * g, bot + 0.50 * g,   // cp1
+        cx - 0.28 * g, bot + 0.32 * g,   // cp2
+        cx - 0.72 * g, bot + 0.02 * g    // 终点：五线左侧
+      );
+
+      // ② 下段上行 — 穿过下方两条线间
+      ctx.bezierCurveTo(
+        cx - 1.02 * g, bot - 0.28 * g,   // cp1
+        cx - 0.62 * g, bot - 0.90 * g,   // cp2
+        cx - 0.12 * g, bot - 1.22 * g    // 终点：G 线左下方
+      );
+
+      // ③ G 线螺旋 ① — 从左向右跨过 G 线
+      ctx.bezierCurveTo(
+        cx + 0.38 * g, bot - 1.42 * g,   // cp1
+        cx + 0.78 * g, bot - 1.15 * g,   // cp2
+        cx + 0.42 * g, bot - 0.82 * g    // 终点：G 线右侧
+      );
+
+      // ④ G 线螺旋 ② — 从右绕回左侧（形成螺旋 belly）
+      ctx.bezierCurveTo(
+        cx + 0.08 * g, bot - 0.50 * g,   // cp1
+        cx - 0.68 * g, bot - 0.58 * g,   // cp2
+        cx - 0.45 * g, bot - 0.92 * g    // 终点：G 线左上方
+      );
+
+      // ⑤ 腰部收窄上行 — 穿过上半部五线
+      ctx.bezierCurveTo(
+        cx - 0.18 * g, bot - 1.30 * g,   // cp1
+        cx + 0.22 * g, bot - 2.10 * g,   // cp2
+        cx + 0.08 * g, bot - 2.80 * g    // 终点：顶线附近
+      );
+
+      // ⑥ 顶部环右半 — 向右弯出
+      ctx.bezierCurveTo(
+        cx - 0.06 * g, bot - 3.45 * g,   // cp1
+        cx + 0.72 * g, bot - 4.15 * g,   // cp2
+        cx + 0.15 * g, bot - 4.85 * g    // 终点：顶部环顶端
+      );
+
+      // ⑦ 顶部环左半 — 从顶端绕回左侧
+      ctx.bezierCurveTo(
+        cx - 0.45 * g, bot - 5.25 * g,   // cp1
+        cx - 0.95 * g, bot - 4.45 * g,   // cp2
+        cx - 0.68 * g, bot - 3.45 * g    // 终点：环左侧
+      );
+
+      // ⑧ 下行穿过上半部
+      ctx.bezierCurveTo(
+        cx - 0.38 * g, bot - 2.35 * g,   // cp1
+        cx - 0.55 * g, bot - 1.25 * g,   // cp2
+        cx - 0.38 * g, bot - 0.38 * g    // 终点：穿过中部
+      );
+
+      // ⑨ 下行穿过下半部至底部
+      ctx.bezierCurveTo(
+        cx - 0.22 * g, bot + 0.28 * g,   // cp1
+        cx - 0.48 * g, bot + 0.58 * g,   // cp2
+        cx + 0.08 * g, bot + 0.80 * g    // 终点：回到起点附近
+      );
+
+      ctx.lineWidth = Math.max(1.8, g / 7.5);
       ctx.stroke();
+
+      // 底部小圆球
       ctx.beginPath();
-      ctx.arc(cx + lineGap * 0.05, topY + lineGap * 2.95, lineGap * 0.18, 0, Math.PI * 2);
+      ctx.arc(cx + 0.10 * g, bot + 0.82 * g, g * 0.16, 0, Math.PI * 2);
       ctx.fill();
+
+      // G 线螺旋处加粗点缀
+      ctx.beginPath();
+      ctx.arc(cx + 0.40 * g, bot - 0.85 * g, g * 0.12, 0, Math.PI * 2);
+      ctx.fill();
+
     } else {
-      const cx = x + lineGap * 0.5;
-      const cy = topY + lineGap * 1.55;
+      // 低音谱号（F 谱号）—— 圆点在第 4 线（F 线 = bot - 3g），
+      // 向右弯出的弧线 + 两个点夹住 F 线
+      const cx = x + g * 0.45;
+      const fy = bot - 3 * g;  // F 线（第 4 线）
+
+      // 主圆点（F 线上的大圆）
       ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.bezierCurveTo(cx + lineGap * 1.05, cy - lineGap * 0.3, cx + lineGap * 1.18, cy + lineGap * 1.0, cx + lineGap * 0.14, cy + lineGap * 2.1);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(cx - lineGap * 0.05, cy, lineGap * 0.22, 0, Math.PI * 2);
+      ctx.arc(cx - g * 0.10, fy, g * 0.24, 0, Math.PI * 2);
       ctx.fill();
+
+      // 弧线：从圆点起笔，向右弯出再向下收
       ctx.beginPath();
-      ctx.arc(cx + lineGap * 1.25, cy + lineGap * 0.55, lineGap * 0.09, 0, Math.PI * 2);
-      ctx.arc(cx + lineGap * 1.25, cy + lineGap * 1.05, lineGap * 0.09, 0, Math.PI * 2);
+      ctx.moveTo(cx + 0.05 * g, fy - 0.08 * g);
+      ctx.bezierCurveTo(
+        cx + 0.45 * g, fy - 0.45 * g,   // cp1
+        cx + 1.10 * g, fy - 0.20 * g,   // cp2
+        cx + 0.90 * g, fy + 0.70 * g    // 终点：右下
+      );
+      ctx.bezierCurveTo(
+        cx + 0.70 * g, fy + 1.05 * g,   // cp1
+        cx + 0.30 * g, fy + 0.80 * g,   // cp2
+        cx + 0.15 * g, fy + 1.30 * g    // 终点：下端点
+      );
+      ctx.bezierCurveTo(
+        cx - 0.05 * g, fy + 1.65 * g,   // cp1
+        cx + 0.25 * g, fy + 1.50 * g,   // cp2
+        cx + 0.20 * g, fy + 2.10 * g    // 终点：底部收束
+      );
+      ctx.lineWidth = Math.max(1.6, g / 8.5);
+      ctx.stroke();
+
+      // 两个小圆点，夹住 F 线（在间上）
+      ctx.beginPath();
+      ctx.arc(cx + 1.05 * g, fy - 0.50 * g, g * 0.09, 0, Math.PI * 2);  // 上方间
+      ctx.arc(cx + 1.05 * g, fy + 0.50 * g, g * 0.09, 0, Math.PI * 2);  // 下方间
       ctx.fill();
     }
     ctx.restore();
