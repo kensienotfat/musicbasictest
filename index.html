@@ -24,6 +24,7 @@
       </header>
 
       <nav class="mode-tabs" aria-label="练习模式">
+        <button type="button" class="tab" data-mode="challenge">闯关</button>
         <button type="button" class="tab is-active" data-mode="random">随机</button>
         <button type="button" class="tab" data-mode="pattern">规律</button>
         <button type="button" class="tab" data-mode="ledger">加线</button>
@@ -51,6 +52,26 @@
       </section>
 
       <section class="practice-stage" aria-live="polite">
+        <!-- DEBUG: 测试用关卡选择器，上线前删除 ↓ -->
+        <div class="challenge-bar" id="challenge-bar" hidden>
+          <span class="challenge-badge">第 <strong id="challenge-level-num">1</strong> 关</span>
+          <span class="challenge-title" id="challenge-level-title"></span>
+          <select class="debug-level-select" id="debug-level-select" title="测试用：直接跳转关卡">
+            <option value="1">第1关</option><option value="2">第2关</option><option value="3">第3关</option>
+            <option value="4">第4关</option><option value="5">第5关</option><option value="6">第6关</option>
+            <option value="7">第7关</option><option value="8">第8关</option><option value="9">第9关</option>
+            <option value="10">第10关</option><option value="11">第11关</option><option value="12">第12关</option>
+            <option value="13">第13关</option><option value="14">第14关</option><option value="15">第15关</option>
+            <option value="16">第16关</option><option value="17">第17关</option><option value="18">第18关</option>
+            <option value="19">第19关</option><option value="20">第20关</option><option value="21">第21关</option>
+            <option value="22">第22关</option><option value="23">第23关</option><option value="24">第24关</option>
+            <option value="25">第25关</option><option value="26">第26关</option><option value="27">第27关</option>
+          </select>
+          <span class="challenge-attempts" id="challenge-attempts"></span>
+        </div>
+        <!-- DEBUG: 测试用关卡选择器，上线前删除 ↑ -->
+        <div class="challenge-progress" id="challenge-progress" hidden></div>
+
         <div class="stage-head">
           <div>
             <p class="eyebrow" id="question-type">随机抽查</p>
@@ -80,6 +101,13 @@
           选择一个音名和一个唱名后自动校验。
         </div>
       </section>
+
+      <div class="challenge-answers" id="challenge-answers" hidden></div>
+
+      <div class="relation-answers" id="relation-answers" hidden>
+        <div class="answer-heading">两音关系</div>
+        <div class="relation-grid" id="relation-grid"></div>
+      </div>
 
       <section class="answer-area" aria-label="答题区">
         <div class="answer-group">
@@ -143,6 +171,18 @@
           <span>随机混入错题</span>
         </label>
       </section>
+      <div class="modal-overlay" id="level-complete-modal" hidden>
+        <div class="modal-card">
+          <h2>关卡通过！</h2>
+          <p class="modal-level-name" id="modal-level-name"></p>
+          <div class="modal-stats">
+            <div><span class="modal-stat-value" id="modal-time"></span><span class="modal-stat-label">秒</span></div>
+            <div><span class="modal-stat-value" id="modal-attempts"></span><span class="modal-stat-label">次挑战</span></div>
+          </div>
+          <button class="primary-button" id="modal-next-level">进入下一关</button>
+          <p class="modal-final" id="modal-final" hidden>恭喜！你已完成全部 27 关！</p>
+        </div>
+      </div>
     </main>
   </body>
 </html>

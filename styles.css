@@ -123,7 +123,7 @@ h1 {
 
 .mode-tabs {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 3px;
   padding: 4px;
   background: #ebe4d6;
@@ -290,6 +290,216 @@ h2 {
   color: #ffffff;
   border-color: var(--red);
   background: var(--red);
+}
+
+/* —— 闯关模式 —— */
+
+.challenge-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.challenge-badge {
+  padding: 5px 12px;
+  color: #ffffff;
+  background: var(--teal);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.challenge-badge strong {
+  font-weight: 900;
+}
+
+.challenge-title {
+  color: var(--ink);
+  font-size: 0.96rem;
+  font-weight: 780;
+}
+
+.challenge-attempts {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.challenge-progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+
+.challenge-dot {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  background: #f4eee2;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font-size: 0.64rem;
+  font-weight: 800;
+}
+
+.challenge-dot.is-done {
+  color: #ffffff;
+  border-color: var(--green);
+  background: var(--green);
+}
+
+.challenge-dot.is-current {
+  color: var(--ink);
+  border-color: var(--amber);
+  background: #fff7e7;
+}
+
+.challenge-dot.is-wrong {
+  color: #ffffff;
+  border-color: var(--red);
+  background: var(--red);
+}
+
+.challenge-answers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.challenge-answer-btn {
+  min-width: 120px;
+  min-height: 52px;
+  padding: 12px 24px;
+  color: var(--ink);
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: 1.08rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.challenge-answer-btn.is-selected {
+  color: #ffffff;
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+.challenge-answer-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.relation-answers {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(255, 253, 248, 0.78);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.relation-grid {
+  display: flex;
+  gap: 8px;
+}
+
+.relation-btn {
+  flex: 1;
+  min-height: 48px;
+}
+
+.relation-btn.is-selected {
+  color: #ffffff;
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+/* —— 测试用关卡选择器（上线前删除） —— */
+.debug-level-select {
+  min-height: 32px;
+  padding: 2px 6px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* —— 过关弹窗 —— */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(32, 32, 29, 0.48);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  padding: 20px;
+}
+
+.modal-card {
+  width: min(100%, 340px);
+  padding: 28px 24px;
+  text-align: center;
+  background: var(--surface-strong);
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(65, 55, 35, 0.22);
+}
+
+.modal-card h2 {
+  margin-bottom: 6px;
+  font-size: 1.4rem;
+}
+
+.modal-level-name {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 18px;
+}
+
+.modal-stats {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.modal-stats > div {
+  text-align: center;
+}
+
+.modal-stat-value {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--teal);
+}
+
+.modal-stat-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.modal-final {
+  margin-top: 12px;
+  color: var(--amber);
+  font-weight: 800;
+  font-size: 0.94rem;
 }
 
 .feedback {
