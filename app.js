@@ -1419,7 +1419,6 @@
       if (!q) return;
       state.current = q.note;
       state.currentNote2 = q.note2;
-      els.questionType.textContent = `第 ${lvl.id} 关`;
       els.questionTitle.textContent = lvl.title;
       els.rangeLabel.textContent = `${state.challenge.levelCurrentIndex + 1} / ${state.challenge.levelQuestions.length}`;
       renderChallengeUI(lvl);
